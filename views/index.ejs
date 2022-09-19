@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title></title>
+    <link rel="stylesheet" href="/css/style.css">
+    <script type="text/javascript" src="/js/jquery.js"></script>
+    <script type="text/javascript" src="/js/script.js"></script>
+    <style>
+      pre {
+        margin: 10px;
+        padding: 15px;
+        background-color: rgb(43, 43, 43);
+        color: #fff;
+        width: 600px;
+        border-radius: 15px;
+      }
+      h1 {
+        font-size: 30px;
+        font-weight: 800;
+        margin: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="wrap">
+      <h1>PUSH 한명 보내기</h1>
+      <pre>
+        
+        const deviceToken = 'send to diviceTokken'
+        const message = {
+          notification:{
+              title:'테스트 발송',
+              body:'테스트 푸쉬 알람!',
+          },
+          token: deviceToken,
+        }
+
+        fcm.messaging()
+        .send(message)
+        .then((response) => {
+          // 푸쉬 성공
+        })
+        .catch((error) => {
+          // 푸쉬 실패
+        });
+      </pre>
+      <form method="POST" action="/push-message">
+        fcmToken : <input name="fcmtoken" type="text">
+        <button>발송</button>
+      </div>
+    </div>
+  </body>
+</html>
