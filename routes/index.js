@@ -7,6 +7,20 @@ fcm.initializeApp({
   credential: fcm.credential.cert(fcm_cert)
 });
 
+const soundConfig = {
+  android: {
+    notification: {
+      sound: 'default'
+    },
+  },
+  apns: {
+    payload: {
+      aps: {
+        sound: 'default'
+      },
+    },
+  },
+}
 
 
 /* GET home page. */
@@ -29,6 +43,7 @@ router.post('/push-message', function (req, res) {
       body: '테스트 푸쉬 알람!',
     },
     token: req.body.fcmtoken,
+    ...soundConfig
   }
 
   fcm.messaging()
@@ -65,6 +80,7 @@ router.post('/push-message-multi', function (req, res) {
       body: '테스트 푸쉬 알람!',
     },
     tokens: tokens,
+    ...soundConfig
   }
 
   fcm.messaging()
@@ -95,6 +111,7 @@ router.post('/push-message-topic', function (req, res) {
       body: 'notice를 구독중인 단체공지 알람!',
     },
     topic: req.body.topic,
+    ...soundConfig
   }
 
   fcm.messaging()
