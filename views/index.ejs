@@ -21,6 +21,15 @@
         margin: 10px;
       }
     </style>
+    <script type="text/javascript">
+      $(function () {
+        var addCount = 1;
+        $(".add-btn").on("click", function () {
+          addCount++;
+          $(".appendInput").append('<input name="fcmtoken'+addCount+'" type="text">');
+        });
+      });
+    </script>
   </head>
   <body>
     <div id="wrap">
@@ -48,7 +57,44 @@
       <form method="POST" action="/push-message">
         fcmToken : <input name="fcmtoken" type="text">
         <button>발송</button>
-      </div>
+      </form>
+
+
+      <h1>PUSH 여러명 보내기</h1>
+
+      <pre>
+        // 한번 발송시 최대 500명
+        const deviceTokens = ['token1', 'token2', ...]
+        const message = {
+          notification:{
+              title:'테스트 발송',
+              body:'테스트 푸쉬 알람!',
+          },
+          tokens: deviceTokens,
+        }
+
+        fcm.messaging()
+        .sendMulticast(message)
+        .then((response) => {
+          if (response.failureCount > 0) {
+            const failedTokens = [];
+            response.responses.forEach((resp, idx) => {
+                if (!resp.success) {
+                  failedTokens.push(deviceToken[idx]);
+                }
+            });
+            // 실패 토큰들: failedTokens
+          }
+        });
+      </pre>
+      <form method="POST" action="/push-message-multi">
+        fcmTokens : 
+        <div class="appendInput">
+          <input name="fcmtoken1" type="text">
+        </div>
+        <button class="add-btn" type="button">추가</button>
+        <button type="submit">발송</button>
+      </form>
     </div>
   </body>
 </html>
