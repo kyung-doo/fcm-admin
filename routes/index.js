@@ -87,4 +87,35 @@ router.post('/push-message-multi', function (req, res) {
   });
 });
 
+router.post('/push-message-topic', function (req, res) {
+  
+  const message = {
+    notification:{
+      title: '단체 공지',
+      body: 'notice를 구독중인 단체공지 알람!',
+    },
+    topic: req.body.topic,
+  }
+
+  fcm.messaging()
+  .send(message)
+  .then((response) => {
+    console.log('push success', response);
+    res.send(`
+    <script>
+      alert('푸쉬를 발송 했습니다.');
+      location.href = '/';
+    </script>`);
+  })
+  .catch((error) => {
+    console.log('push failed', error);
+    res.send(`
+    <script>
+      alert('푸쉬를 발송에 실패 했습니다.');
+      location.href = '/';
+    </script>`);
+  });
+});
+
+
 module.exports = router;

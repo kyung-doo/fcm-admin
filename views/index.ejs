@@ -95,6 +95,32 @@
         <button class="add-btn" type="button">추가</button>
         <button type="submit">발송</button>
       </form>
+
+      <h1>주제 구독 보내기</h1>
+
+      <pre>
+        const topic = 'notice';
+        const message = {
+          notification:{
+            title: '단체 공지',
+            body: 'notice를 구독중인 단체공지 알람!',
+          },
+          topic: topic,
+        }
+
+        fcm.messaging()
+        .send(message)
+        .then((response) => {
+          // 푸쉬 성공
+        })
+        .catch((error) => {
+          // 푸쉬 실패
+        });
+      </pre>
+      <form method="POST" action="/push-message-topic">
+        topic이름 : <input name="topic" type="text" value="notice">
+        <button type="submit">발송</button>
+      </form>
     </div>
   </body>
 </html>
