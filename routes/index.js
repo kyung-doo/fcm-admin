@@ -7,7 +7,7 @@ fcm.initializeApp({
   credential: fcm.credential.cert(fcm_cert)
 });
 
-const soundConfig = {
+const defaultMsg = {
   android: {
     notification: {
       sound: 'default'
@@ -19,6 +19,7 @@ const soundConfig = {
         sound: 'default'
       },
     },
+    fcm_options: {}
   },
 }
 
@@ -37,14 +38,23 @@ router.post('/push-message', function (req, res) {
       location.href = '/';
     </script>`);
   }
+
+  if(req.body.picture) {
+    defaultMsg.android.notification.imageUrl = req.body.picture;
+    defaultMsg.apns.payload.aps = {'mutable-content': 1}
+    defaultMsg.apns.fcm_options.image = req.body.picture;
+  }
+
   const message = {
     notification:{
       title: '테스트 발송',
       body: '테스트 푸쉬 알람!',
     },
     token: req.body.fcmtoken,
-    ...soundConfig
+    ...defaultMsg,
   }
+
+  console.log(message);
 
   fcm.messaging()
   .send(message)
@@ -80,7 +90,7 @@ router.post('/push-message-multi', function (req, res) {
       body: '테스트 푸쉬 알람!',
     },
     tokens: tokens,
-    ...soundConfig
+    ...defaultMsg
   }
 
   fcm.messaging()
@@ -111,7 +121,7 @@ router.post('/push-message-topic', function (req, res) {
       body: 'notice를 구독중인 단체공지 알람!',
     },
     topic: req.body.topic,
-    ...soundConfig
+    ...defaultMsg
   }
 
   fcm.messaging()

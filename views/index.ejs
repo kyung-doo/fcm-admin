@@ -36,27 +36,32 @@
       <h1>PUSH 한명 보내기</h1>
       <pre>
         
-        const deviceToken = 'send to diviceTokken'
+        const deviceToken = 'send to diviceTokken';
+        const imagePath = 'image path';
         const message = {
           notification:{
               title:'테스트 발송',
               body:'테스트 푸쉬 알람!',
           },
-          sound: 'default',
           token: deviceToken,
           android: {
             notification: {
-              sound: 'default'
+              sound: 'default',
+              imageUrl: imagePath // 이미지 있을경우
             },
           },
           apns: {
             payload: {
               aps: {
-                sound: 'default'
+                sound: 'default',
+                aps: { 'mutable-content': 1 } // 이미지 있을경우
               },
+              fcm_options: {
+                image: imagePath // 이미지 있을경우
+              }
             },
           }
-        }
+        };
 
         fcm.messaging()
         .send(message)
@@ -68,7 +73,8 @@
         });
       </pre>
       <form method="POST" action="/push-message">
-        fcmToken : <input name="fcmtoken" type="text">
+        fcmToken : <input name="fcmtoken" type="text"><br />
+        사진 경로 : <input name="picture" type="text">
         <button>발송</button>
       </form>
 
@@ -83,7 +89,6 @@
               title:'테스트 발송',
               body:'테스트 푸쉬 알람!',
           },
-          sound: 'default',
           tokens: deviceTokens,
           android: {
             notification: {
@@ -131,7 +136,6 @@
             title: '단체 공지',
             body: 'notice를 구독중인 단체공지 알람!',
           },
-          sound: 'default',
           topic: topic,
           android: {
             notification: {
