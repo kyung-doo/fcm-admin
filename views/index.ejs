@@ -46,15 +46,15 @@
           token: deviceToken,
           android: {
             notification: {
-              sound: 'default',
+              sound: 'default', // 기본 사운드
               imageUrl: imagePath // 이미지 있을경우
             },
           },
           apns: {
             payload: {
               aps: {
-                sound: 'default',
-                aps: { 'mutable-content': 1 } // 이미지 있을경우
+                sound: 'default', // 기본 사운드
+                'mutable-content': 1 // 이미지 있을경우
               },
               fcm_options: {
                 image: imagePath // 이미지 있을경우
