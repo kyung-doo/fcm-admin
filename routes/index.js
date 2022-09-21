@@ -10,7 +10,8 @@ fcm.initializeApp({
 const defaultMsg = {
   android: {
     notification: {
-      sound: 'default'
+      sound: 'default',
+      icon: 'ic_icon'
     },
   },
   apns: {
