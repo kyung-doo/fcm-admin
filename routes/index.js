@@ -51,6 +51,9 @@ router.post('/push-message', function (req, res) {
       title: '테스트 발송',
       body: '테스트 푸쉬 알람!',
     },
+    data: {
+      link: '/NGLMS/Mobile/High/Community/Notice.do?seq=101779&type=view'
+    },
     token: req.body.fcmtoken,
     ...defaultMsg,
   }
